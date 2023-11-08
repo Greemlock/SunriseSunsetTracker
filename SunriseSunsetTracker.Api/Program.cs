@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SunriseSunsetTracker.Api.Data;
+using SunriseSunsetTracker.Api.Data.Database;
+using SunriseSunsetTracker.Api.Data.Database.Entities;
+using SunriseSunsetTracker.Api.Data.Database.Repositories;
 using SunriseSunsetTracker.Api.Interfaces;
 using SunriseSunsetTracker.Api.Services;
 
@@ -9,13 +12,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<IEntityRepository<City>, CityRepository>();
+
+
 builder.Services.AddHttpClient<ISunriseSunsetService, SunriseSunsetService>(client => 
 {
     client.BaseAddress = new Uri(builder.Configuration["HttpClients:SunsetSunrise:BaseUrl"]!);
 });
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration["Database:DefaultConnectionString"]));
 
 var app = builder.Build();
 

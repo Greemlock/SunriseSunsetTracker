@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SunriseSunsetTracker.Api.Data.Entities;
+using SunriseSunsetTracker.Api.Data.Database.Entities;
+using SunriseSunsetTracker.Api.Interfaces;
 
 namespace SunriseSunsetTracker.Api.Controllers;
 
@@ -7,16 +8,25 @@ namespace SunriseSunsetTracker.Api.Controllers;
 [Route("[controller]")]
 public class CityController : ControllerBase
 {
+    private readonly IEntityRepository<City> _cityRepository;
     private readonly ILogger<CityController> _logger;
 
-    public CityController(ILogger<CityController> logger)
+    public CityController(IEntityRepository<City> cityRepository, ILogger<CityController> logger)
     {
+        _cityRepository = cityRepository;
         _logger = logger;
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<City> GetCity(ulong id) => 
-    //     await Task.FromResult(new GetCityResponseModel
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCity(int id)
+    {
+        var entity = await _cityRepository.GetByIdAsync(id);
+        return entity is not null 
+            ? Ok(entity)
+            : NotFound(entity);
+    }
+    //
+    // await Task.FromResult(new GetCityResponseModel
     //     {
     //         City = new City()
     //         {

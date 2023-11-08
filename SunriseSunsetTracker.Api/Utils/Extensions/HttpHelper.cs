@@ -2,7 +2,7 @@
 
 namespace SunriseSunsetTracker.Api.Utils.Extensions;
 
-public static class HttpExtensions
+public static class HttpHelper
 {
     public static async Task<T> DeserializeResponseAsync<T>(this HttpResponseMessage response)
     {

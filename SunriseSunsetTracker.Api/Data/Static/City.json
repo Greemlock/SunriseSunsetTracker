@@ -1,0 +1,122 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "Винница",
+    "GeoHash": "u8u0pfseys0w"
+  },
+  {
+    "Id": 2,
+    "Name": "Днепр",
+    "GeoHash": "ub8gtx81br75"
+  },
+  {
+    "Id": 3,
+    "Name": "Донецк",
+    "GeoHash": "ubdchjkwucgf"
+  },
+  {
+    "Id": 4,
+    "Name": "Житомир",
+    "GeoHash": "u8umuhefcuu1"
+  },
+  {
+    "Id": 5,
+    "Name": "Запорожье",
+    "GeoHash": "ub8bpss7hsy9"
+  },
+  {
+    "Id": 6,
+    "Name": "Ивано-Франковск",
+    "GeoHash": "u89w64pw5bvh"
+  },
+  {
+    "Id": 7,
+    "Name": "Киев",
+    "GeoHash": "u8vxn81qfuq1"
+  },
+  {
+    "Id": 8,
+    "Name": "Кропивницкий",
+    "GeoHash": "u8wgynwkwzu2"
+  },
+  {
+    "Id": 9,
+    "Name": "Луганск",
+    "GeoHash": "ubeuq5q1f20d"
+  },
+  {
+    "Id": 10,
+    "Name": "Луцк",
+    "GeoHash": "u9408mcjm3ch"
+  },
+  {
+    "Id": 11,
+    "Name": "Львов",
+    "GeoHash": "u8c5dc4fw51k"
+  },
+  {
+    "Id": 12,
+    "Name": "Николаев",
+    "GeoHash": "u8qepxhndwh1"
+  },
+  {
+    "Id": 13,
+    "Name": "Одесса",
+    "GeoHash": "u8mb7jdeqpsu"
+  },
+  {
+    "Id": 14,
+    "Name": "Полтава",
+    "GeoHash": "ubbd476y9s0y"
+  },
+  {
+    "Id": 15,
+    "Name": "Ровно",
+    "GeoHash": "u8fxvqgq98un"
+  },
+  {
+    "Id": 16,
+    "Name": "Сумы",
+    "GeoHash": "uc09xg64njt0"
+  },
+  {
+    "Id": 17,
+    "Name": "Тернополь",
+    "GeoHash": "u8f1ymhej12t"
+  },
+  {
+    "Id": 18,
+    "Name": "Ужгород",
+    "GeoHash": "u2xue54kvjwu"
+  },
+  {
+    "Id": 19,
+    "Name": "Харьков",
+    "GeoHash": "ubcu2kynbubz"
+  },
+  {
+    "Id": 20,
+    "Name": "Херсон",
+    "GeoHash": "u8r1q38hbj43"
+  },
+  {
+    "Id": 21,
+    "Name": "Хмельницкий",
+    "GeoHash": "u8g1nj5sedc1"
+  },
+  {
+    "Id": 22,
+    "Name": "Черкассы",
+    "GeoHash": "u8yc32yv9wpd"
+  },
+  {
+    "Id": 23,
+    "Name": "Чернигов",
+    "GeoHash": "u9nkbn9rf3qk"
+  },
+  {
+    "Id": 24,
+    "Name": "Черновцы",
+    "GeoHash": "u8d6vp4buqps"
+  }
+]
