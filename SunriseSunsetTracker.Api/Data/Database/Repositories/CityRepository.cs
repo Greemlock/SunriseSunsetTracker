@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SunriseSunsetTracker.Api.Data.Database.Entities;
 using SunriseSunsetTracker.Api.Interfaces;
+using SunriseSunsetTracker.Common.Database.Entities;
 
 namespace SunriseSunsetTracker.Api.Data.Database.Repositories;
 
@@ -19,22 +19,22 @@ public class CityRepository : IEntityRepository<City>
     public async Task<City?> GetByIdAsync(int id) =>
         await _dbContext.Cities.FindAsync(id);
 
-    public async Task AddAsync(City? product)
+    public async Task AddAsync(City? city)
     {
-        await _dbContext.Cities.AddAsync(product);
+        await _dbContext.Cities.AddAsync(city);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(City? product)
+    public async Task UpdateAsync(City? city)
     {
-        _dbContext.Cities.Update(product);
+        _dbContext.Cities.Update(city);
         await _dbContext.SaveChangesAsync();
     }
 
     public async Task RemoveAsync(int id)
     {
-        var product = await _dbContext.Cities.FindAsync(id);
-        _dbContext.Cities.Remove(product);
+        var city = await _dbContext.Cities.FindAsync(id);
+        _dbContext.Cities.Remove(city);
         await _dbContext.SaveChangesAsync();
     }
 }

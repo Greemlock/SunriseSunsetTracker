@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using SunriseSunsetTracker.Api.Data.DTO;
 using SunriseSunsetTracker.Api.Interfaces;
-using SunriseSunsetTracker.Api.Utils.Extensions;
+using SunriseSunsetTracker.Common.Extensions;
 
 namespace SunriseSunsetTracker.Api.Services;
 
@@ -14,9 +14,9 @@ public class SunriseSunsetService : ISunriseSunsetService
         _httpClient = httpClient;
     }
 
-    public async Task<GetSunriseSunsetResponse> GetSunriseSunsetTime(
-        float latitude,
-        float longitude)
+    public async Task<GetSunriseSunsetResponse> GetSunriseSunsetTimeAsync(
+        double latitude,
+        double longitude)
     {
         var values = new Dictionary<string, string>
         {

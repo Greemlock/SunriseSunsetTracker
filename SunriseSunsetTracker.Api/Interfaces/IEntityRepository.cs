@@ -1,4 +1,4 @@
-﻿using SunriseSunsetTracker.Api.Data.Database.Entities;
+﻿using SunriseSunsetTracker.Common.Database.Entities;
 
 namespace SunriseSunsetTracker.Api.Interfaces;
 

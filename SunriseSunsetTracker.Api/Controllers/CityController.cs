@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SunriseSunsetTracker.Api.Data.Database.Entities;
 using SunriseSunsetTracker.Api.Interfaces;
+using SunriseSunsetTracker.Common.Database.Entities;
 
 namespace SunriseSunsetTracker.Api.Controllers;
 
@@ -9,12 +9,10 @@ namespace SunriseSunsetTracker.Api.Controllers;
 public class CityController : ControllerBase
 {
     private readonly IEntityRepository<City> _cityRepository;
-    private readonly ILogger<CityController> _logger;
 
-    public CityController(IEntityRepository<City> cityRepository, ILogger<CityController> logger)
+    public CityController(IEntityRepository<City> cityRepository)
     {
         _cityRepository = cityRepository;
-        _logger = logger;
     }
 
     [HttpGet("{id}")]
@@ -25,41 +23,38 @@ public class CityController : ControllerBase
             ? Ok(entity)
             : NotFound(entity);
     }
-    //
-    // await Task.FromResult(new GetCityResponseModel
-    //     {
-    //         City = new City()
-    //         {
-    //             Id = 1,
-    //             Name = "WeatherForecast",
-    //             GeoCoordinates = (1, 1)
-    //         }
-    //     });
-    //
-    // [HttpGet]
-    // public async Task<GetAllCitiesResponseModel> GetAllCities() => 
-    //     await Task.FromResult(new GetAllCitiesResponseModel
-    //     {
-    //         Cities = new List<City>()
-    //         {
-    //             new City()
-    //             {
-    //                 Id = 1,
-    //                 Name = "WeatherForecast",
-    //                 GeoCoordinates = (1, 1)
-    //             },
-    //             new City()
-    //             {
-    //                 Id = 2,
-    //                 Name = "WeatherForecast",
-    //                 GeoCoordinates = (2, 2)
-    //             }
-    //         },
-    //     });
-    //
-    // [HttpPost]
-    // public async Task<IActionResult> AddCity(AddCityRequest request) => await Task.FromResult(Created(request.City.Id.ToString(), request.City));
-    //
-    // [HttpPost]
-    // public async Task<IActionResult> AddMultipleCities(AddMultipleCitiesRequest request) => await Task.FromResult(Created());
+    
+    [HttpGet("list")]
+    public async Task<IActionResult> GetAllCities()
+    {
+        var entity = await _cityRepository.GetAllAsync();
+        return entity.Any() 
+            ? Ok(entity)
+            : NotFound(entity);
+    }
+
+    [HttpPost("add")]
+    public async Task<IActionResult> AddCity([FromBody] City entity)
+    {
+        await _cityRepository.AddAsync(entity);
+        return Created($"City {entity} has been added.", entity);
+    }
+    
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateCity([FromBody] City entity)
+    {
+        await _cityRepository.UpdateAsync(entity);
+        return Ok(entity);
+    }
+    
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteCity(int id)
+    {
+        var entity = await _cityRepository.GetByIdAsync(id);
+        if (entity is not null)
+        {
+            await _cityRepository.RemoveAsync(id);
+        }
+        return Ok($"City {id} has been deleted.");
+    }
 }

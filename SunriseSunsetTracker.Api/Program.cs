@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using SunriseSunsetTracker.Api.Data;
 using SunriseSunsetTracker.Api.Data.Database;
-using SunriseSunsetTracker.Api.Data.Database.Entities;
 using SunriseSunsetTracker.Api.Data.Database.Repositories;
 using SunriseSunsetTracker.Api.Interfaces;
 using SunriseSunsetTracker.Api.Services;
+using SunriseSunsetTracker.Common.Database.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

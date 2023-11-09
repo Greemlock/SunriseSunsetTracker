@@ -4,7 +4,7 @@ namespace SunriseSunsetTracker.Api.Interfaces;
 
 public interface ISunriseSunsetService
 {
-    public Task<GetSunriseSunsetResponse> GetSunriseSunsetTime(
-        float latitude,
-        float longitude);
+    public Task<GetSunriseSunsetResponse> GetSunriseSunsetTimeAsync(
+        double latitude,
+        double longitude);
 }

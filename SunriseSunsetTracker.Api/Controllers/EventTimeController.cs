@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SunriseSunsetTracker.Api.Interfaces;
+using SunriseSunsetTracker.Common.Contracts.Responses;
 
 namespace SunriseSunsetTracker.Api.Controllers;
 
@@ -15,14 +16,13 @@ public class EventTimeController : ControllerBase
     }
     
     [HttpGet("latitude={latitude}&longitude={longitude}")]
-    public async Task<IActionResult> GetTodaySunriseSunsetTime(float latitude, float longitude)
+    public async Task<IActionResult> GetTodaySunriseSunsetTime(double latitude, double longitude)
     {
-        var response = await _sunriseSunsetService.GetSunriseSunsetTime(latitude, longitude);
-        
-        return Ok(new
+        var response = await _sunriseSunsetService.GetSunriseSunsetTimeAsync(latitude, longitude);
+        return Ok(new EventTimeResponseModel
         {
-            response.Results.Sunrise,
-            response.Results.Sunset
-        });
+                SunriseTime = response.Results.Sunrise,
+                SunsetTime = response.Results.Sunset
+            });
     }
 }

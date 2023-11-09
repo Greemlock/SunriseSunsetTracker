@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SunriseSunsetTracker.Api.Data.Database.Entities;
-using SunriseSunsetTracker.Api.Utils.Extensions;
+using SunriseSunsetTracker.Common.Database.Entities;
+using SunriseSunsetTracker.Common.Extensions;
 
 namespace SunriseSunsetTracker.Api.Data.Database;
 
@@ -33,7 +33,11 @@ public sealed class AppDbContext : DbContext
             .IsRequired();
 
         modelBuilder.Entity<City>()
-            .Property(entity => entity.GeoHash)
+            .Property(entity => entity.Latitude)
+            .IsRequired();
+        
+        modelBuilder.Entity<City>()
+            .Property(entity => entity.Longitude)
             .IsRequired();
         
         var citySeedDataPath =
