@@ -3,6 +3,8 @@ using SunriseSunsetTracker.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddLog4Net();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<ICityService, CityService>(client => 
@@ -32,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/");
 
 app.Run();

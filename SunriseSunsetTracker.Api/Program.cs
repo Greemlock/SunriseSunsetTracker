@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SunriseSunsetTracker.Api.Data.Database;
 using SunriseSunsetTracker.Api.Data.Database.Repositories;
 using SunriseSunsetTracker.Api.Interfaces;
@@ -6,6 +8,8 @@ using SunriseSunsetTracker.Api.Services;
 using SunriseSunsetTracker.Common.Database.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddLog4Net();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -22,7 +26,6 @@ builder.Services.AddHttpClient<ISunriseSunsetService, SunriseSunsetService>(clie
 {
     client.BaseAddress = new Uri(builder.Configuration["HttpClients:SunsetSunrise:BaseUrl"]!);
 });
-
 
 var app = builder.Build();
 
