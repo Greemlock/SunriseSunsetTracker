@@ -75,11 +75,13 @@
             </div>
             <div class="modal-body">
                 <h4>
-                    Sunrise Time: <a id="sunriseTime"></a>
+                    Sunrise Time:
                 </h4>
+                <label id="sunriseTime"></label>
                 <h4>
-                    Sunset Time: <a id="sunsetTime"></a>
+                    Sunset Time:
                 </h4>
+                <label id="sunsetTime"></label>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
@@ -162,8 +164,8 @@
                             longitude: response.longitude
                         },
                         success: function (response) {
-                            let sunriseTime = new Date(response["sunriseTime"]).toLocaleString();
-                            let sunsetTime = new Date(response["sunsetTime"]).toLocaleString();
+                            let sunriseTime = new Date(response["sunriseTime"]).toTimeString();
+                            let sunsetTime = new Date(response["sunsetTime"]).toTimeString();
                             
                             document.getElementById("sunsetTime").innerText = sunsetTime;
                             document.getElementById("sunriseTime").innerText = sunriseTime;
