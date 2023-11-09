@@ -1,17 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+
 <div class="container">
     <div class="row">
-        @foreach (var card in Model.Cards)
+        @foreach (var city in Model.Cities)
         {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@card.Name</h5>
-                        <p class="card-text">Координаты: @card.GeoCoordinates</p>
-                        <a href="#" class="btn btn-primary">Редактировать</a>
-                        <a href="#" class="btn btn-secondary">Восход/Закат</a>
+                        <h5 class="card-title">@city.Name</h5>
+                        <p class="card-text">Coordinates:
+                            @city.Latitude.ToString("0.######")
+                            @city.Longitude.ToString("0.######")
+                        </p>
+                        <a href="#" class="btn btn-primary edit-button" data-id="@city.Id">Edit</a>
+                        <a href="#" class="btn btn-danger delete-button" data-id="@city.Id">Delete</a>
+                        <a href="#" class="btn btn-secondary hours-button" data-id="@city.Id">Sunset/Sunrise</a>
                     </div>
                 </div>
             </div>
@@ -19,9 +24,228 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <a href="#" class="btn btn-success">+ Add New</a>
+                    <a href="#" class="btn btn-success add-button">+ Add New</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit City</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="cityName">City Name</label>
+                        <input type="text" class="form-control" id="cityName">
+                    </div>
+                    <div class="form-group">
+                        <label for="latitude">Latitude</label>
+                        <input type="text" class="form-control" id="latitude" name="latitude">
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude</label>
+                        <input type="text" class="form-control" id="longitude" name="longitude">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary save-changes">Save Changes</button>
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="hoursModal" tabindex="-1" role="dialog" aria-labelledby="hoursModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hoursModalLabel">Sunrise/Sunset in City</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>
+                    Sunrise Time: <a id="sunriseTime"></a>
+                </h4>
+                <h4>
+                    Sunset Time: <a id="sunsetTime"></a>
+                </h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete City</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this city?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger confirm-delete">Delete</button>
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        let isEditing = false;
+        let editId;
+        
+        $(".edit-button").click(function () {
+            isEditing = true;
+            editId = $(this).data("id");
+
+            let cityId = $(this).data("id");
+            
+            $.ajax({
+                url: `/${cityId}`,
+                method: "GET",
+                success: function (response) {
+                    $("#cityName").val(response.name);
+                    $("#longitude").val(response.longitude);
+                    $("#latitude").val(response.latitude);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+            
+            $("#editModal").modal("show");
+        });
+
+        $(".add-button").click(function () {
+            isEditing = false;
+            
+            $("#cityName").val("");
+            $("#longitude").val("");
+            $("#latitude").val("");
+
+            $("#editModal").modal("show");
+        });
+
+        $(".hours-button").click(function () {
+            let id = $(this).data("id");
+            
+            $.ajax({
+                url: `/${id}`,
+                method: "GET",
+                success: function (response) {
+                    $.ajax({
+                        url: "eventtime",
+                        type: "GET",
+                        data: {
+                            latitude: response.latitude,
+                            longitude: response.longitude
+                        },
+                        success: function (response) {
+                            let sunriseTime = new Date(response["sunriseTime"]).toLocaleString();
+                            let sunsetTime = new Date(response["sunsetTime"]).toLocaleString();
+                            
+                            document.getElementById("sunsetTime").innerText = sunsetTime;
+                            document.getElementById("sunriseTime").innerText = sunriseTime;
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.log("Error:", error);
+                }
+            });
+
+            $("#hoursModal").modal("show");
+        });
+
+        $(".save-changes").click(function () {
+            let cityName = $("#cityName").val();
+            let longitude = $("#longitude").val();
+            let latitude = $("#latitude").val();
+            
+            let requestData = {
+                name: cityName,
+                longitude: longitude,
+                latitude: latitude
+            }
+            
+            let requestType;
+            let requestPath;
+            
+            if(isEditing){
+                requestType = "PUT";
+                requestPath = "update";
+                
+                requestData.id = editId;
+            }
+            else{
+                requestType = "POST";
+                requestPath = "add";
+            }
+            
+            $.ajax({
+                url: requestPath,
+                type: requestType,
+                data: requestData,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Error:", error);
+                }
+            });
+        });
+        
+        $(".delete-button").click(function () {
+            let id = $(this).data("id");
+            $("#deleteModal").data("id", id);
+            $("#deleteModal").modal("show");
+        });
+        
+        $(".confirm-delete").click(function () {
+            let id = $("#deleteModal").data("id");
+        
+                $.ajax({
+                    type: "DELETE",
+                    url: `/${id}`,
+                    success: function () {
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                    }
+                });
+        });
+        
+        $('.close').click(function() {
+            $("#cityName").val("");
+            $("#longitude").val("");
+            $("#latitude").val("");
+            
+            $(this).closest('.modal').modal('hide');
+        });
+    });
+</script>
