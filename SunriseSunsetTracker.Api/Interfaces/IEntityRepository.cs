@@ -8,5 +8,5 @@ public interface IEntityRepository<in TEntity>
     public Task<City?> GetByIdAsync(int id);
     public Task AddAsync(TEntity product);
     public Task UpdateAsync(TEntity product);
-    public Task RemoveAsync(int id);
+    public Task RemoveAsync(TEntity entity);
 }

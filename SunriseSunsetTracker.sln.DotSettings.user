@@ -2,6 +2,9 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0c9fa570_002D2842_002D4735_002Db087_002Df9b56f3b8a73/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;SunsetSunriseTracker.Api.Tests&amp;gt; #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\artur\Projects\Programming\SunriseSunsetTracker\SunsetSunriseTracker.Api.Tests" Presentation="&amp;lt;SunsetSunriseTracker.Api.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=50198f90_002D2c47_002D438b_002D9170_002D452d05048dd2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;SunsetSunriseTracker.Api.Tests&amp;gt; #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\artur\Projects\Programming\SunriseSunsetTracker\SunsetSunriseTracker.Api.Tests" Presentation="&amp;lt;SunsetSunriseTracker.Api.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f2ee3881_002D52d4_002D43cf_002Dac69_002D035380e682c0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;SunsetSunriseTracker.Api.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\artur\Projects\Programming\SunriseSunsetTracker\SunsetSunriseTracker.Api.Tests" Presentation="&amp;lt;SunsetSunriseTracker.Api.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

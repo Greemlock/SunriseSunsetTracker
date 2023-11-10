@@ -19,21 +19,20 @@ public class CityRepository : IEntityRepository<City>
     public async Task<City?> GetByIdAsync(int id) =>
         await _dbContext.Cities.FindAsync(id);
 
-    public async Task AddAsync(City? city)
+    public async Task AddAsync(City city)
     {
         await _dbContext.Cities.AddAsync(city);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(City? city)
+    public async Task UpdateAsync(City city)
     {
         _dbContext.Cities.Update(city);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task RemoveAsync(int id)
+    public async Task RemoveAsync(City city)
     {
-        var city = await _dbContext.Cities.FindAsync(id);
         _dbContext.Cities.Remove(city);
         await _dbContext.SaveChangesAsync();
     }

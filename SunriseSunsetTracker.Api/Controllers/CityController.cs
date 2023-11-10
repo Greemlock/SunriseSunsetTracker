@@ -64,7 +64,7 @@ public class CityController : ControllerBase
         if (entity is null)
             return NotFound($"City with id {id} not found.");
         
-        await _cityRepository.RemoveAsync(id);
+        await _cityRepository.RemoveAsync(entity);
         return Ok($"City {id} has been deleted.");
     }
 }
