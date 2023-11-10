@@ -1,15 +1,32 @@
+using Microsoft.EntityFrameworkCore;
+using SunriseSunsetTracker.Api.Data.Database;
+using SunriseSunsetTracker.Api.Data.Database.Repositories;
+using SunriseSunsetTracker.Api.Interfaces;
+using SunriseSunsetTracker.Api.Services;
+using SunriseSunsetTracker.Common.Database.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Logging.AddLog4Net();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<IEntityRepository<City>, CityRepository>();
+
+
+builder.Services.AddHttpClient<ISunriseSunsetService, SunriseSunsetService>(client => 
+{
+    client.BaseAddress = new Uri(builder.Configuration["HttpClients:SunsetSunrise:BaseUrl"]!);
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
