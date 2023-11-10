@@ -15,8 +15,12 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
+    // options.UseInMemoryDatabase("MemoryDb")
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Configuration.GetConnectionString("DefaultConnection"))
+    
+    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+);
 builder.Services.AddTransient<IEntityRepository<City>, CityRepository>();
 
 
