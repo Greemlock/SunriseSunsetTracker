@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SunriseSunsetTracker.Api.Data.Database;
 using SunriseSunsetTracker.Api.Data.Database.Repositories;
 using SunriseSunsetTracker.Api.Interfaces;

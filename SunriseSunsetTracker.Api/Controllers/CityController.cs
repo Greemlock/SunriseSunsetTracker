@@ -34,15 +34,25 @@ public class CityController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> AddCity([FromBody] City entity)
+    public async Task<IActionResult> AddCity([FromBody] City? entity)
     {
+        if (entity is null)
+            return BadRequest("City entity cannot be null.");
+
         await _cityRepository.AddAsync(entity);
         return Created($"City {entity} has been added.", entity);
     }
     
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateCity([FromBody] City entity)
+    public async Task<IActionResult> UpdateCity([FromBody] City? entity)
     {
+        if (entity is null)
+            return BadRequest("City entity cannot be null.");
+        
+        var existingCity = await _cityRepository.GetByIdAsync(entity.Id);
+        if (existingCity == null)
+            return NotFound($"City with ID {entity.Id} not found.");
+
         await _cityRepository.UpdateAsync(entity);
         return Ok(entity);
     }
@@ -51,10 +61,10 @@ public class CityController : ControllerBase
     public async Task<IActionResult> DeleteCity(int id)
     {
         var entity = await _cityRepository.GetByIdAsync(id);
-        if (entity is not null)
-        {
-            await _cityRepository.RemoveAsync(id);
-        }
+        if (entity is null)
+            return NotFound($"City with id {id} not found.");
+        
+        await _cityRepository.RemoveAsync(id);
         return Ok($"City {id} has been deleted.");
     }
 }
