@@ -12,13 +12,11 @@ public class HomeController : Controller
 {
     private readonly ICityService _cityService;
     private readonly IEventTimeService _eventTimeService;
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ICityService cityService, IEventTimeService eventTimeService, ILogger<HomeController> logger)
+    public HomeController(ICityService cityService, IEventTimeService eventTimeService)
     {
         _cityService = cityService;
         _eventTimeService = eventTimeService;
-        _logger = logger;
     }
 
     public async Task<ViewResult> Index()
@@ -31,14 +29,23 @@ public class HomeController : Controller
         return View(viewModel);
     }
     
-    [HttpGet("eventtime")]
-    public async Task<EventTimeResponseModel> GetSunriseSunsetTime(
+    [HttpGet("sunrise&sunset")]
+    public async Task<SunriseSunsetTimeFormatted> GetSunriseSunsetTime(
         string latitude,
-        string longitude)
+        string longitude,
+        string format = "g")
     {
-        return await _eventTimeService.GetSunsetSunriseTimeAsync(
+        
+        var result = await _eventTimeService.GetSunriseSunsetTimeAsync(
             double.Parse(latitude, CultureInfo.InvariantCulture),
             double.Parse(longitude, CultureInfo.InvariantCulture));
+
+        var result1 = new SunriseSunsetTimeFormatted(format)
+        {
+            SunriseTime = result.SunriseTime,
+            SunsetTime = result.SunsetTime
+        };
+        return result1;
     }
 
     #region City management

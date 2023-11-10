@@ -75,13 +75,12 @@
             </div>
             <div class="modal-body">
                 <h4>
-                    Sunrise Time:
+                    Sunrise Time: <a id="sunriseTime"></a>
                 </h4>
-                <label id="sunriseTime"></label>
                 <h4>
-                    Sunset Time:
+                    Sunset Time: <a id="sunsetTime"></a>
                 </h4>
-                <label id="sunsetTime"></label>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
@@ -157,18 +156,16 @@
                 method: "GET",
                 success: function (response) {
                     $.ajax({
-                        url: "eventtime",
+                        url: "sunrise&sunset",
                         type: "GET",
                         data: {
                             latitude: response.latitude,
                             longitude: response.longitude
                         },
                         success: function (response) {
-                            let sunriseTime = new Date(response["sunriseTime"]).toTimeString();
-                            let sunsetTime = new Date(response["sunsetTime"]).toTimeString();
-                            
-                            document.getElementById("sunsetTime").innerText = sunsetTime;
-                            document.getElementById("sunriseTime").innerText = sunriseTime;
+                            console.log(response)
+                            document.getElementById("sunriseTime").innerText = response["sunriseTimeFormatted"];
+                            document.getElementById("sunsetTime").innerText = response["sunsetTimeFormatted"];
                         },
                         error: function (error) {
                             console.log("Error:", error);

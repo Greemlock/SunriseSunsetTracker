@@ -20,8 +20,8 @@ public class SunriseSunsetService : ISunriseSunsetService
     {
         var values = new Dictionary<string, string>
         {
-            { nameof(latitude), latitude.ToString(CultureInfo.InvariantCulture) },
-            { nameof(longitude), longitude.ToString(CultureInfo.InvariantCulture) }
+            { "lat", latitude.ToString(CultureInfo.InvariantCulture) },
+            { "lng", longitude.ToString(CultureInfo.InvariantCulture) }
         };
 
         var requestContent = await new FormUrlEncodedContent(values).ReadAsStringAsync();
